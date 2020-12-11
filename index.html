@@ -3,11 +3,9 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
     <meta charset="utf-8" />
   </head>
   <body>
-    <script src="sketch.js"></script>
     <h1>Squares</h1>
     <h2>Click on the square.</h2>
     <span id="counter"> 0 </span> / <span id="hitlimit"> 0 </span>
@@ -16,7 +14,7 @@
   <style>
     body {
       margin: auto;
-      max-width: 1000px;
+      max-width: 500px;
     }
   </style>
 </html>
@@ -27,8 +25,8 @@
   const hits_limit = 5;
 
   var square_size = 205;
-  var can_length = 400;
-  var can_width = 400;
+  var can_length = 500;
+  var can_width = 500;
 
   var square_x = can_width / 2 - square_size / 2;
   var square_y = can_length / 2 - square_size / 2;
