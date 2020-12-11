@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <script src="sketch.js"></script>
+    <h1>Squares</h1>
+    <h2>Click on the square.</h2>
+    <span id="counter"> 0 </span> / <span id="hitlimit"> 0 </span>
+    <span id="timer"></span>
+  </body>
+</html>
+
+<script>
+  const size_decrease = 10;
+  const size_scale = 0.9;
+  const hits_limit = 5;
+
+  var square_size = 205;
+  var can_length = 400;
+  var can_width = 400;
+
+  var square_x = can_width / 2 - square_size / 2;
+  var square_y = can_length / 2 - square_size / 2;
+  var hits = 0;
+
+  var counter = document.getElementById("counter");
+  var hitlimit = document.getElementById("hitlimit");
+  var timelem = document.getElementById("timer");
+  hitlimit.innerHTML = hits_limit;
+
+  var start_time = 0;
+  var finish_time = 0;
+  var state = 0;
+  var r = 0;
+  var g = 0;
+  var b = 0;
+
+  function reset_square_coords() {
+    square_x = Math.floor(Math.random() * (can_width - square_size));
+    square_y = Math.floor(Math.random() * (can_length - square_size));
+    square_size *= size_scale;
+    hits++;
+    counter.innerHTML = hits;
+  }
+
+  function point_in_square(x, y) {
+    if (x < square_x || y < square_y) {
+      return false;
+    }
+
+    if (x > square_x + square_size || y > square_y + square_size) {
+      return false;
+    }
+    return true;
+  }
+
+  function mouseClicked() {
+    console.log(event);
+    if (point_in_square(event.offsetX, event.offsetY)) {
+      r = random(255);
+      g = random(100, 200);
+      if (!hits) {
+        start_time = Date.now();
+        state = 1;
+      }
+      reset_square_coords();
+      if (hits === hits_limit) {
+        var finish_time = Date.now();
+        state = 2;
+      }
+    }
+  }
+
+  function setup() {
+    var r = random(255);
+    var g = random(100, 200);
+    var b = random(100);
+    createCanvas(can_width, can_length);
+  }
+
+  function draw() {
+    if (state == 1) {
+      var total_time = Date.now() - start_time;
+      timelem.innerHTML = total_time / 1000.0;
+    }
+
+    if (state == 2) {
+      fill(30, 144, 255);
+      textSize(50);
+      textAlign(RIGHT);
+      text("You won!!!", 300, can_length / 2);
+    } else {
+      background(220);
+      fill(r, g, b);
+      square(square_x, square_y, square_size);
+    }
+  }
+</script>
